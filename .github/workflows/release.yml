@@ -68,8 +68,8 @@ jobs:
     needs: [quality-checks]
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     outputs:
-      version_tag: ${{ steps.get_tag.outputs.tag }}
-      new_release_published: ${{ steps.semantic_release.outputs.new_release_published }}
+      version_tag: ${{ steps.release_info.outputs.tag }}
+      new_release_published: ${{ steps.release_info.outputs.new_release_published }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
@@ -92,16 +92,37 @@ jobs:
           pnpm add -g semantic-release
           pnpm add -D @semantic-release/changelog @semantic-release/git @semantic-release/exec @semantic-release/github @semantic-release/commit-analyzer @semantic-release/release-notes-generator
 
+      - name: Store initial version
+        id: initial_version
+        run: |
+          INITIAL_VERSION=$(node -p "require('./package.json').version")
+          echo "version=$INITIAL_VERSION" >> $GITHUB_OUTPUT
+          echo "ℹ️ Initial version: $INITIAL_VERSION"
+
       - name: Run semantic-release (without assets)
         id: semantic_release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npx semantic-release
 
-      - name: Get latest tag
-        id: get_tag
+      - name: Check release status and get tag
+        id: release_info
         run: |
-          echo "tag=$(git describe --tags --abbrev=0 2>/dev/null || echo 'v0.0.0')" >> $GITHUB_OUTPUT
+          # Compare versions before and after semantic-release
+          INITIAL_VERSION="${{ steps.initial_version.outputs.version }}"
+          FINAL_VERSION=$(node -p "require('./package.json').version")
+          LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo 'v0.0.0')
+
+          echo "final_version=$FINAL_VERSION" >> $GITHUB_OUTPUT
+          echo "tag=$LATEST_TAG" >> $GITHUB_OUTPUT
+
+          if [ "$INITIAL_VERSION" != "$FINAL_VERSION" ]; then
+            echo "new_release_published=true" >> $GITHUB_OUTPUT
+            echo "✅ New release published: $INITIAL_VERSION → $FINAL_VERSION (Tag: $LATEST_TAG)"
+          else
+            echo "new_release_published=false" >> $GITHUB_OUTPUT
+            echo "ℹ️ No version change detected: $INITIAL_VERSION (Tag: $LATEST_TAG)"
+          fi
 
   # Build job - builds with correct version after release
   build:
