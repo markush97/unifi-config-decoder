@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
 
 const version = process.argv[2];
 
@@ -13,7 +13,7 @@ if (!version) fail('No version provided. Usage: node git/update-versions.js 1.2.
 
 // Basic semver check, allow pre-release/build metadata
 const SEMVER_RE = /^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?(?:\+[0-9A-Za-z.-]+)?$/;
-if (!SEMVER_RE.test(version)) fail(`Invalid semver: "${version}"`);
+if (!SEMVER_RE.test(version)) fail(`Invalid semver: '${version}'`);
 
 const repoRoot = process.cwd();
 const targets = [
