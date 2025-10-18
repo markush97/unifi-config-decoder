@@ -2,7 +2,7 @@ import type { RefObject } from 'react';
 import React from 'react';
 
 interface FileUploadProps {
-  fileInputRef: RefObject<HTMLInputElement | null>;
+  fileInputRef: RefObject<HTMLInputElement>;
   isDragging: boolean;
   isProcessing: boolean;
   onFileChange: () => void;
