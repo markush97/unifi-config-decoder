@@ -106,6 +106,7 @@ export const UnifiDecoder = () => {
           fileInputRef={fileInputRef}
           isDragging={isDragging}
           isProcessing={isProcessing}
+          hasConfigDecoded={backupInfo !== null}
           onFileChange={handleFileChange}
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
