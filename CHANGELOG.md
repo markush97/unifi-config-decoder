@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/markush97/unifi-config-decoder/compare/v1.0.0...v1.1.0) (2025-10-18)
+
+
+### Features
+
+* Improve UI by using custom upload button and disabling actions before decoding ([9b22af3](https://github.com/markush97/unifi-config-decoder/commit/9b22af305996119342dc36fed3abd949bf935986))
+
 # 1.0.0 (2025-10-18)
 
 
