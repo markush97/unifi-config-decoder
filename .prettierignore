@@ -1,0 +1,25 @@
+# Ignore artifacts:
+dist/
+build/
+coverage/
+*.log
+node_modules/
+
+# Ignore all HTML files:
+*.html
+
+# Ignore generated files:
+*.d.ts
+.next/
+.nuxt/
+.vuepress/dist/
+
+# Ignore package manager files:
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Ignore config files that should not be formatted:
+*.min.js
+*.min.css
+lint-*
