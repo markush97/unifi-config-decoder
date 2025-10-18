@@ -90,7 +90,7 @@ jobs:
       - name: Install semantic-release dependencies
         run: |
           pnpm add -g semantic-release
-          pnpm add -D @semantic-release/changelog @semantic-release/git @semantic-release/github @semantic-release/commit-analyzer @semantic-release/release-notes-generator
+          pnpm add -D @semantic-release/changelog @semantic-release/git @semantic-release/exec @semantic-release/github @semantic-release/commit-analyzer @semantic-release/release-notes-generator
 
       - name: Run semantic-release (without assets)
         id: semantic_release
