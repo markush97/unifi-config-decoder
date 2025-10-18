@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/markush97/unifi-config-decoder/compare/v1.1.0...v1.1.1) (2025-10-18)
+
+
+### Bug Fixes
+
+* fix version tag using wrong quotes ([9fd3c0c](https://github.com/markush97/unifi-config-decoder/commit/9fd3c0c6462173e3cc4f1834109f59e6decc42ad))
+
 # [1.1.0](https://github.com/markush97/unifi-config-decoder/compare/v1.0.0...v1.1.0) (2025-10-18)
 
 
