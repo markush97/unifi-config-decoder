@@ -1,6 +1,9 @@
 import JSZip from 'jszip';
 import { ungzip } from 'pako';
 
+import type { BackupInfo, DeviceRecord, VlanConfig, WanConfig } from '../unifi/types';
+import { categorizeDevices, formatSuggestedFilename } from '../unifi/types';
+
 import { IV_HEX, KEY_HEX, decryptBuffer } from './cryptoUtils';
 import { createEndOfCentralDirectory, parseCentralDirectory } from './zipParser';
 import {
@@ -10,8 +13,6 @@ import {
   findFirstIndex,
   findLastIndex,
 } from './zipUtils';
-import type { BackupInfo, DeviceRecord, VlanConfig, WanConfig } from '../unifi/types';
-import { categorizeDevices, formatSuggestedFilename } from '../unifi/types';
 
 /**
  * Analyzes a UniFi backup file and extracts all metadata

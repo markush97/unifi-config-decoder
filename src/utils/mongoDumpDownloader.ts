@@ -2,6 +2,8 @@ import { BSON } from 'bson';
 import { loadAsync } from 'jszip';
 import { ungzip } from 'pako';
 
+import { formatSuggestedFilename } from '../unifi/types';
+
 import { decryptBuffer, IV_HEX, KEY_HEX } from './cryptoUtils';
 import { createEndOfCentralDirectory, parseCentralDirectory } from './zipParser';
 import {
@@ -11,7 +13,6 @@ import {
   findFirstIndex,
   findLastIndex,
 } from './zipUtils';
-import { formatSuggestedFilename } from '../unifi/types';
 
 /**
  * Exports MongoDB dump as JSON file

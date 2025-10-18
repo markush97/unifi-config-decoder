@@ -1,13 +1,13 @@
 import type { DragEvent } from 'react';
 import { useRef, useState } from 'react';
 
+import { analyzeBackup } from '../utils/backupAnalyzer';
+import { downloadMongoDump } from '../utils/mongoDumpDownloader';
 import { downloadAsZip } from '../utils/zipDownloader';
 
 import { FileUpload } from './components/FileUpload';
 import { StatusMessage } from './components/StatusMessage';
 import { TabNavigation } from './components/TabNavigation';
-import { analyzeBackup } from '../utils/backupAnalyzer';
-import { downloadMongoDump } from '../utils/mongoDumpDownloader';
 import { DevicesTab } from './tabs/DevicesTab';
 import { OverviewTab } from './tabs/OverviewTab';
 import { SwitchesTab } from './tabs/SwitchesTab';
