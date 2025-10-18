@@ -167,18 +167,19 @@ jobs:
 
       - name: Create build archive
         run: |
+          VERSION_TAG=${{ needs.release.outputs.version_tag }}
           cd dist
-          zip -r ../unifi-config-decoder-build.zip .
+          zip -r ../unifi-decoder-${VERSION_TAG}.zip .
           cd ..
 
-      - name: Upload corrected build archive to release
+      - name: Upload build archive to release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           VERSION_TAG=${{ needs.release.outputs.version_tag }}
-          gh release upload ${VERSION_TAG} unifi-config-decoder-build.zip --clobber
+          gh release upload ${VERSION_TAG} unifi-decoder-${VERSION_TAG}.zip --clobber
 
-      - name: Upload corrected build artifacts
+      - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
           name: dist
@@ -218,7 +219,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ghcr.io/${{ github.repository }}/unifi-config-decoder
+          images: ghcr.io/${{ github.repository }}
           tags: |
             type=ref,event=branch
             type=ref,event=pr
@@ -231,6 +232,7 @@ jobs:
         with:
           context: .
           file: ./Dockerfile
+          platforms: linux/amd64,linux/arm64,linux/arm/v7
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
