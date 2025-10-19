@@ -94,7 +94,7 @@ export const UnifiDecoder = () => {
     <div className='p-6 max-w-7xl mx-auto'>
       <div className='bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 mb-6'>
         <h2 className='font-bold text-2xl text-gray-900 dark:text-white mb-2'>
-          UniFi .unf Backup Decoder
+          UniFi Backup and Supportfile Decoder
         </h2>
         <p className='text-gray-600 dark:text-gray-400 mb-4'>
           Decrypt and analyze UniFi backup files. All processing happens locally in your browser.
