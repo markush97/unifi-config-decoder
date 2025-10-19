@@ -12,7 +12,6 @@ import tsparser from '@typescript-eslint/parser';
 
 export default [
   {
-
     ignores: ['dist', 'node_modules', '*.d.ts', 'vite.config.js', 'eslint.config.js', 'git/**'],
   },
   {
@@ -156,6 +155,20 @@ export default [
     rules: {
       '@typescript-eslint/no-require-imports': 'off',
       '@typescript-eslint/no-var-requires': 'off',
+      'import/no-unresolved': 'off',
+    },
+  },
+  {
+    files: ['electron/**/*.{js,ts}'],
+    languageOptions: {
+      globals: {
+        ...globals.node,
+        Electron: 'readonly',
+      },
+    },
+    rules: {
+      'no-undef': 'off',
+      '@typescript-eslint/no-require-imports': 'off',
       'import/no-unresolved': 'off',
     },
   },
