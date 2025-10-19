@@ -1,3 +1,10 @@
+## [1.3.2](https://github.com/markush97/unifi-config-decoder/compare/v1.3.1...v1.3.2) (2025-10-19)
+
+
+### Bug Fixes
+
+* fix invalid target in linux electron build and the CI using wrong line-ends ([6eb5465](https://github.com/markush97/unifi-config-decoder/commit/6eb5465cfc64b9f9b5617bfce15cf1a393ffed7d))
+
 ## [1.3.1](https://github.com/markush97/unifi-config-decoder/compare/v1.3.0...v1.3.1) (2025-10-19)
 
 
