@@ -96,9 +96,85 @@ export const UnifiDecoder = () => {
         <h2 className='font-bold text-2xl text-gray-900 dark:text-white mb-2'>
           UniFi .unf Backup Decoder
         </h2>
-        <p className='text-gray-600 dark:text-gray-400'>
+        <p className='text-gray-600 dark:text-gray-400 mb-4'>
           Decrypt and analyze UniFi backup files. All processing happens locally in your browser.
         </p>
+
+        {/* Instructions Section */}
+        <div className='bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-700 rounded-lg p-4'>
+          <h3 className='font-semibold text-lg text-blue-900 dark:text-blue-100 mb-3 flex items-center'>
+            📋 How to get your UniFi backup file (.unf)
+          </h3>
+
+          <div className='space-y-4'>
+            {/* Method 1: Controller Web Interface */}
+            <div>
+              <h4 className='font-medium text-blue-800 dark:text-blue-200 mb-2'>
+                🌐 Method 1: From UniFi Controller Web Interface
+              </h4>
+              <ol className='list-decimal list-inside text-sm text-blue-700 dark:text-blue-300 space-y-1 ml-4'>
+                <li>
+                  Open your UniFi Controller web interface (usually http://controller-ip:8443)
+                </li>
+                <li>Log in with your administrator credentials</li>
+                <li>
+                  Navigate to <strong>Settings → System → Backup/Restore</strong>
+                </li>
+                <li>
+                  Click <strong>&quot;Download Backup&quot;</strong> to save the .unf file
+                </li>
+              </ol>
+            </div>
+
+            {/* Method 2: Site Manager */}
+            <div>
+              <h4 className='font-medium text-blue-800 dark:text-blue-200 mb-2'>
+                📱 Method 2: Using UniFi Site Manager (when console is offline)
+              </h4>
+              <ol className='list-decimal list-inside text-sm text-blue-700 dark:text-blue-300 space-y-1 ml-4'>
+                <li>
+                  Open the <strong>UniFi Site Manager</strong> mobile app or web portal
+                </li>
+                <li>Select your site from the list</li>
+                <li>
+                  Go to <strong>Settings → System → Backup</strong>
+                </li>
+                <li>
+                  Tap <strong>&quot;Download Backup&quot;</strong> or{' '}
+                  <strong>&quot;Export Configuration&quot;</strong>
+                </li>
+                <li>The .unf file will be downloaded to your device</li>
+              </ol>
+            </div>
+
+            {/* Method 3: SSH/CLI */}
+            <div>
+              <h4 className='font-medium text-blue-800 dark:text-blue-200 mb-2'>
+                🖥️ Method 3: SSH/Command Line (Advanced)
+              </h4>
+              <ol className='list-decimal list-inside text-sm text-blue-700 dark:text-blue-300 space-y-1 ml-4'>
+                <li>SSH into your UniFi Controller or Cloud Key</li>
+                <li>
+                  Navigate to the UniFi directory (usually{' '}
+                  <code className='bg-blue-100 dark:bg-blue-800 px-1 rounded'>
+                    /opt/unifi/data/backup/autobackup/
+                  </code>
+                  )
+                </li>
+                <li>Look for recent .unf files and copy them to your local machine</li>
+              </ol>
+            </div>
+
+            {/* Important Notes */}
+            <div className='bg-yellow-50 dark:bg-yellow-900/30 border border-yellow-200 dark:border-yellow-700 rounded p-3 mt-4'>
+              <p className='text-sm text-yellow-800 dark:text-yellow-200'>
+                <strong>💡 Important:</strong> The backup file contains sensitive network
+                configuration data. Keep it secure and only use it for legitimate network analysis
+                purposes.
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div className='space-y-6'>
