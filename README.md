@@ -7,11 +7,13 @@
 [![Docker Image](https://img.shields.io/badge/docker-ghcr.io-2496ED?logo=docker&logoColor=white)](https://github.com/markush97/unifi-config-decoder/pkgs/container/unifi-config-decoder)
 [![License](https://img.shields.io/github/license/markush97/Unifi-Config-Decoder?logo=github)](LICENSE)
 
-> **📦 Download the latest build**: Get the ready-to-use application from the [latest release](https://github.com/markush97/Unifi-Config-Decoder/releases/latest) - no build required!
+> **📦 Download the latest build**: Get the ready-to-use application from the [latest release](https://github.com/markush97/Unifi-Config-Decoder/releases/latest)
 
 I struggled for some time, to have good desaster recovery-features inplace for Ubiquity Unifi Setups. I wanted a solution that allows me to easily find usefull debugging informations (for example VLANs, Gateway-IPs and configured Switch-Ports) without needing to have a working/reachable unifi-controller with the current config.
 
 I looked around in the web and did not found anything that suited my needs so I just built it myself.
+
+You can try out the application immediately at them [**Demo**](https://unifi.hilabs.eu) - it's completely safe as all processing happens locally in your browser without uploading any data to external servers.
 
 # Features
 
@@ -21,22 +23,60 @@ I looked around in the web and did not found anything that suited my needs so I 
 - 📱 **Responsive design** - works on desktop and mobile devices
 - 🌙 **Dark/Light theme** support
 - 📦 **Multiple export formats** - JSON database dumps and ZIP archives
+- **Selfhostable** - Just deploy using Docker or put static webpage onto webserver
+- **Run offline** - Prebundled for many distributions (as .deb, .exe etc.)
 
 ## Usage
 
-### 🐳 Docker (Recommended)
+### Desktop Application (Native)
+
+This way of installation allows having file-name-associations for .unf files so you can just doubleclick them to open.
+
+Download the native desktop application for your operating system from [GitHub Releases](https://github.com/markush97/Unifi-Config-Decoder/releases/latest):
+
+**🐧 Linux:**
+
+- **`.deb`** - For Ubuntu, Debian, and derivatives (double-click to install)
+- **`.AppImage`** - Portable application (make executable and run)
+- **`.tar.gz`** - Archive for manual installation
+
+**🪟 Windows:**
+
+The Windows-App is not signed yet. If somebody wants to sponser the Code-Signing-Certificate feel free to reach out! Would really apreciate it!
+
+- **`.exe`** - Windows-App
+
+**🍎 macOS:**
+
+- **`.dmg`** - Disk image for macOS
+
+### 🐳 Docker (Recommended for Servers)
 
 Run the application using Docker with multi-architecture support:
 
 ```bash
 # Latest version
 docker run -p 3000:80 ghcr.io/markush97/unifi-config-decoder:latest
+```
 
-# Specific version
-docker run -p 3000:80 ghcr.io/markush97/unifi-config-decoder:v1.1.0
+### 📋 Docker Compose Example
 
-# With custom port
-docker run -p 8080:80 ghcr.io/markush97/unifi-config-decoder:latest
+Create a `docker-compose.yml` file:
+
+```yaml
+services:
+  unifi-decoder:
+    image: ghcr.io/markush97/unifi-config-decoder:latest
+    container_name: unifi-decoder
+    ports:
+      - '3000:80'
+    restart: unless-stopped
+```
+
+Then run:
+
+```bash
+docker-compose up -d
 ```
 
 Then open your browser and navigate to `http://localhost:3000` (or your chosen port).
@@ -54,24 +94,15 @@ Then open your browser and navigate to `http://localhost:3000` (or your chosen p
 3. **Open** the `index.html` file in your web browser
 4. **Upload** your `.unf` backup file and start analyzing!
 
-**Benefits of static version:**
-
-- ✅ No installation required
-- ✅ Works offline
-- ✅ Portable - run from USB stick
-- ✅ No server needed
-- ✅ Cross-platform (Windows, macOS, Linux)
-
 ### 🌐 Online Version
 
-Visit the hosted version at [your-domain.com] (if available) - but remember, the local versions are more secure as your data never leaves your device.
+Just visit https://unifi.hilabs.eu for easy usage without any setup required. Still as safe as the offline version, since all calculations are always done locally in your browser without uploading any data.
 
 ## How to Use
 
 1. **Get your UniFi backup file** (`.unf`):
    - Export from UniFi Controller: Settings → System → Backup/Restore → Download Backup
-2. **Open the application** (Docker or static HTML)
-
+2. **Open the application**
 3. **Upload your `.unf` file**:
    - Click "📂 Choose .unf file" or drag and drop
    - The file will be automatically decrypted and analyzed
@@ -82,78 +113,8 @@ Visit the hosted version at [your-domain.com] (if available) - but remember, the
    - **VLANs**: Network segmentation details
    - **WAN**: Internet connection settings
 5. **Export results**:
-   - **📦 Download ZIP**: Get processed files as archive
+   - **📦 Download ZIP**: Get processed files as decrypted archive
    - **📄 Download JSON**: Get readable config database
-
-## Deployment
-
-### 🐳 Docker Compose
-
-Create a `docker-compose.yml`:
-
-```yaml
-version: '3.8'
-services:
-  unifi-decoder:
-    image: ghcr.io/markush97/unifi-config-decoder:latest
-    ports:
-      - '3000:80'
-    restart: unless-stopped
-```
-
-Run with: `docker-compose up -d`
-
-### ☸️ Kubernetes
-
-```yaml
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: unifi-decoder
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: unifi-decoder
-  template:
-    metadata:
-      labels:
-        app: unifi-decoder
-    spec:
-      containers:
-        - name: unifi-decoder
-          image: ghcr.io/markush97/unifi-config-decoder:latest
-          ports:
-            - containerPort: 80
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: unifi-decoder-service
-spec:
-  selector:
-    app: unifi-decoder
-  ports:
-    - port: 80
-      targetPort: 80
-  type: LoadBalancer
-```
-
-### 🖥️ Self-hosted (Static Files)
-
-1. Download and extract the latest release ZIP
-2. Serve the files with any web server:
-
-```bash
-# Python
-python -m http.server 8080
-
-# Node.js
-npx serve .
-
-# nginx
-# Point document root to extracted folder
-```
 
 # Contribution
 

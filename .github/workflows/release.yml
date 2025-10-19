@@ -186,6 +186,120 @@ jobs:
           path: dist/
           retention-days: 30
 
+  # Electron build job - builds desktop applications
+  electron-build:
+    name: Build Electron Apps
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    needs: [quality-checks, release, build]
+    if: needs.release.outputs.new_release_published == 'true'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+          ref: main
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Get pnpm store directory
+        shell: bash
+        run: echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Download web build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+      - name: Build Electron app
+        run: |
+          pnpm run electron:compile
+          pnpm run electron:build
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload Linux artifacts
+        if: matrix.os == 'ubuntu-latest'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          VERSION_TAG=${{ needs.release.outputs.version_tag }}
+          cd dist-electron-packed
+
+          # Upload .deb files
+          for file in *.deb; do
+            if [ -f "$file" ]; then
+              gh release upload ${VERSION_TAG} "$file" --clobber
+            fi
+          done
+
+          # Upload AppImage files
+          for file in *.AppImage; do
+            if [ -f "$file" ]; then
+              gh release upload ${VERSION_TAG} "$file" --clobber
+            fi
+          done
+
+          # Upload tar.gz files
+          for file in *.tar.gz; do
+            if [ -f "$file" ]; then
+              gh release upload ${VERSION_TAG} "$file" --clobber
+            fi
+          done
+
+      - name: Upload Windows artifacts
+        if: matrix.os == 'windows-latest'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          VERSION_TAG=${{ needs.release.outputs.version_tag }}
+          cd dist-electron-packed
+
+          # Upload .exe installer
+          for file in *.exe; do
+            if [ -f "$file" ]; then
+              gh release upload ${VERSION_TAG} "$file" --clobber
+            fi
+          done
+
+      - name: Upload macOS artifacts
+        if: matrix.os == 'macos-latest'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          VERSION_TAG=${{ needs.release.outputs.version_tag }}
+          cd dist-electron-packed
+
+          # Upload .dmg files
+          for file in *.dmg; do
+            if [ -f "$file" ]; then
+              gh release upload ${VERSION_TAG} "$file" --clobber
+            fi
+          done
+
   # Docker build job - builds and pushes Docker image
   docker-build:
     name: Build and Push Docker Image

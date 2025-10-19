@@ -12,6 +12,7 @@ import tsparser from '@typescript-eslint/parser';
 
 export default [
   {
+
     ignores: ['dist', 'node_modules', '*.d.ts', 'vite.config.js', 'eslint.config.js', 'git/**'],
   },
   {
