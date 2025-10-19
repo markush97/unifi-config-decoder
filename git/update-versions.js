@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import fs from 'fs';
 import path from 'path';
+import os from 'os';
 
 const version = process.argv[2];
 
@@ -20,7 +21,7 @@ const targets = [
   {
     type: 'ts',
     file: path.join(repoRoot, 'src', 'version.ts'),
-    render: v => `export const APP_VERSION = '${v}';\n`,
+    render: v => `export const APP_VERSION = '${v}';${os.EOL}`,
   },
   {
     type: 'pkg',
@@ -58,7 +59,7 @@ for (const t of targets) {
       const pkg = JSON.parse(raw);
       if (pkg.version !== version) {
         pkg.version = version;
-        const pretty = JSON.stringify(pkg, null, 2) + '\n';
+        const pretty = JSON.stringify(pkg, null, 2) + os.EOL;
         safeWrite(t.file, pretty);
         changed.push(t.file);
       } else {

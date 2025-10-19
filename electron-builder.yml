@@ -30,9 +30,6 @@ linux:
       arch:
         - x64
         - arm64
-    - target: exe
-      arch:
-        - x64
   category: Network
   description: Decrypt and analyze UniFi backup files
 
