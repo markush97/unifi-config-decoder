@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/markush97/unifi-config-decoder/compare/v1.2.0...v1.3.0) (2025-10-19)
+
+
+### Features
+
+* add instructions on the landing page on how to actually get the unifi-config ([90c0644](https://github.com/markush97/unifi-config-decoder/commit/90c0644bceae02a4d38f40a65aadbc43012fbe1b))
+
 # [1.2.0](https://github.com/markush97/unifi-config-decoder/compare/v1.1.1...v1.2.0) (2025-10-19)
 
 
