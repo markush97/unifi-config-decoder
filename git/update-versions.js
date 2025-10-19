@@ -20,8 +20,7 @@ const targets = [
   {
     type: 'ts',
     file: path.join(repoRoot, 'src', 'version.ts'),
-    render: v => `export const APP_VERSION = '${v}'
-    ;\n`,
+    render: v => `export const APP_VERSION = '${v}';\n`,
   },
   {
     type: 'pkg',
