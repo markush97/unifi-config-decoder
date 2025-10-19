@@ -1,1 +1,13 @@
-npx lint-staged
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Run all checks using existing package.json scripts
+echo "🔍 Running pre-commit checks..."
+
+# Use the existing "check" script that runs format:check && lint
+pnpm run check
+
+# Run lint-staged for final cleanup of staged files
+pnpm lint-staged
+
+echo "✅ All pre-commit checks passed!"
