@@ -1,6 +1,6 @@
 # Unifi Config Decoder
 
-[![CI/CD Pipeline](https://github.com/markush97/Unifi-Config-Decoder/actions/workflows/release.yml/badge.svg)](https://github.com/markush97/Unifi-Config-Decoder/actions/workflows/release.yml)
+[![CI/CD Pipeline](https://github.com/markush97/Unifi-Config-Decoder/actions/workflows/release.yml/badge.svg?branch=main)](https://github.com/markush97/Unifi-Config-Decoder/actions/workflows/release.yml)
 [![Latest Release](https://img.shields.io/github/v/release/markush97/Unifi-Config-Decoder?include_prereleases&sort=semver&logo=github)](https://github.com/markush97/Unifi-Config-Decoder/releases/latest)
 [![GitHub Release Date](https://img.shields.io/github/release-date/markush97/Unifi-Config-Decoder?logo=github)](https://github.com/markush97/Unifi-Config-Decoder/releases)
 [![Download Latest](https://img.shields.io/github/downloads/markush97/Unifi-Config-Decoder/latest/total?logo=github&label=downloads)](https://github.com/markush97/Unifi-Config-Decoder/releases/latest)
@@ -9,13 +9,13 @@
 
 > **📦 Download the latest build**: Get the ready-to-use application from the [latest release](https://github.com/markush97/Unifi-Config-Decoder/releases/latest)
 
-I struggled for some time, to have good desaster recovery-features inplace for Ubiquity Unifi Setups. I wanted a solution that allows me to easily find usefull debugging informations (for example VLANs, Gateway-IPs and configured Switch-Ports) without needing to have a working/reachable unifi-controller with the current config.
+I struggled for some time to have good disaster recovery features in place for Ubiquiti UniFi setups. I wanted a solution that allows me to easily find useful debugging information (for example VLANs, Gateway IPs and configured Switch Ports) without needing to have a working/reachable UniFi controller with the current config.
 
-I looked around in the web and did not found anything that suited my needs so I just built it myself.
+I looked around on the web and did not find anything that suited my needs so I just built it myself.
 
-You can try out the application immediately at them [**Demo**](https://unifi.hilabs.eu) - it's completely safe as all processing happens locally in your browser without uploading any data to external servers.
+You can try out the application immediately at the [**Demo**](https://unifi.hilabs.eu) - it's completely safe as all processing happens locally in your browser without uploading any data to external servers.
 
-# Features
+## Features
 
 - 🔍 **Decrypt and analyze** UniFi backup files (.unf)
 - 📊 **Visual dashboard** with device overview, VLANs, switches, and WAN configuration
@@ -23,8 +23,34 @@ You can try out the application immediately at them [**Demo**](https://unifi.hil
 - 📱 **Responsive design** - works on desktop and mobile devices
 - 🌙 **Dark/Light theme** support
 - 📦 **Multiple export formats** - JSON database dumps and ZIP archives
-- **Selfhostable** - Just deploy using Docker or put static webpage onto webserver
-- **Run offline** - Prebundled for many distributions (as .deb, .exe etc.)
+- 🏗️ **Self-hostable** - Just deploy using Docker or put static webpage onto webserver
+- 📴 **Run offline** - Pre-bundled for many distributions (as .deb, .exe etc.)
+
+## Screenshots
+
+### Landing Page
+
+![Landing Page](git/screenshots/landingpage.png)
+
+_Upload your UniFi backup file and get started with the analysis_
+
+### Overview Dashboard
+
+![Overview](git/screenshots/overview.png)
+
+_Get a comprehensive overview of your UniFi configuration_
+
+### Switch Configuration
+
+![Switches](git/screenshots/switches.png)
+
+_Detailed view of switch ports and their configurations_
+
+### VLAN Analysis
+
+![VLANs](git/screenshots/vlans.png)
+
+_Analyze your network segmentation and VLAN setup_
 
 ## Usage
 
@@ -42,9 +68,9 @@ Download the native desktop application for your operating system from [GitHub R
 
 **🪟 Windows:**
 
-The Windows-App is not signed yet. If somebody wants to sponser the Code-Signing-Certificate feel free to reach out! Would really apreciate it!
+The Windows app is not signed yet. If somebody wants to sponsor the Code-Signing Certificate feel free to reach out! Would really appreciate it!
 
-- **`.exe`** - Windows-App
+- **`.exe`** - Windows app
 
 **🍎 macOS:**
 
@@ -59,7 +85,7 @@ Run the application using Docker with multi-architecture support:
 docker run -p 3000:80 ghcr.io/markush97/unifi-config-decoder:latest
 ```
 
-### 📋 Docker Compose Example
+#### Docker Compose Example
 
 Create a `docker-compose.yml` file:
 
@@ -116,6 +142,6 @@ Just visit https://unifi.hilabs.eu for easy usage without any setup required. St
    - **📦 Download ZIP**: Get processed files as decrypted archive
    - **📄 Download JSON**: Get readable config database
 
-# Contribution
+## Contribution
 
 Feel free to open issues or contribute to the project. I cannot promise any quick changes but I am open to criticism and feedback.
