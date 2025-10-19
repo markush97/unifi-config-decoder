@@ -1,3 +1,11 @@
+## [1.3.1](https://github.com/markush97/unifi-config-decoder/compare/v1.3.0...v1.3.1) (2025-10-19)
+
+
+### Bug Fixes
+
+* change text on landingpage ([0a39d9a](https://github.com/markush97/unifi-config-decoder/commit/0a39d9ac5a15bf44c8f92d567ac57d8c7f37fa40))
+* fix electron using undefined variables and style error in version-file ([11d6903](https://github.com/markush97/unifi-config-decoder/commit/11d69034df09d4b3f53aab204d9808d1a49f8618))
+
 # [1.3.0](https://github.com/markush97/unifi-config-decoder/compare/v1.2.0...v1.3.0) (2025-10-19)
 
 
