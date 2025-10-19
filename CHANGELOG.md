@@ -1,3 +1,15 @@
+# [1.2.0](https://github.com/markush97/unifi-config-decoder/compare/v1.1.1...v1.2.0) (2025-10-19)
+
+
+### Bug Fixes
+
+* fix linting errors and reformat files ([17b9daf](https://github.com/markush97/unifi-config-decoder/commit/17b9daf005896f25c2efc2e1307cbafcff87fd07))
+
+
+### Features
+
+* include different native builds by leveraging electron ([caa850c](https://github.com/markush97/unifi-config-decoder/commit/caa850c3477ce2fdc6f3b18105721f56cb3560c5))
+
 ## [1.1.1](https://github.com/markush97/unifi-config-decoder/compare/v1.1.0...v1.1.1) (2025-10-18)
 
 
