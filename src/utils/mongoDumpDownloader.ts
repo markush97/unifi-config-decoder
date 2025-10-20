@@ -1,4 +1,3 @@
-import { BSON } from 'bson';
 import { loadAsync } from 'jszip';
 import { ungzip } from 'pako';
 
@@ -50,6 +49,7 @@ export async function downloadMongoDump(
   onStatusChange('Parsing all collections...');
 
   // Step 5: Parse all BSON documents
+  const { BSON } = await import('bson');
   const collections: Record<string, Record<string, unknown>[]> = {};
   const view = new DataView(dbBuffer.buffer, dbBuffer.byteOffset, dbBuffer.byteLength);
   let offset = 0;

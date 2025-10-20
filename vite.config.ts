@@ -13,6 +13,27 @@ export default defineConfig({
     emptyOutDir: true,
     rollupOptions: {
       external: ['electron'],
+      output: {
+        manualChunks: id => {
+          // Vendor chunk for React and core libraries
+          if (id.includes('node_modules/react') || id.includes('node_modules/react-dom')) {
+            return 'vendor';
+          }
+          // BSON and data processing
+          if (
+            id.includes('node_modules/bson') ||
+            id.includes('node_modules/pako') ||
+            id.includes('node_modules/jszip') ||
+            id.includes('node_modules/crypto')
+          ) {
+            return 'utils';
+          }
+          // Other node_modules
+          if (id.includes('node_modules')) {
+            return 'vendor';
+          }
+        },
+      },
     },
   },
 });
