@@ -12,6 +12,7 @@ import { DevicesTab } from './tabs/DevicesTab';
 import { OverviewTab } from './tabs/OverviewTab';
 import { SwitchesTab } from './tabs/SwitchesTab';
 import { VlansTab } from './tabs/VlansTab';
+import { VpnsTab } from './tabs/VpnsTab';
 import { WanTab } from './tabs/WanTab';
 import type { BackupInfo, TabType } from './types';
 import { hasValidWanData } from './types';
@@ -202,6 +203,7 @@ export const UnifiDecoder = () => {
               deviceCount={backupInfo.otherDevices.length}
               wanCount={backupInfo.wanConfigs.filter(wan => hasValidWanData(wan)).length}
               vlanCount={backupInfo.vlanConfigs.length}
+              vpnCount={backupInfo.vpnConfigs.length}
             />
 
             <div>
@@ -225,6 +227,7 @@ export const UnifiDecoder = () => {
               {activeTab === 'devices' && <DevicesTab devices={backupInfo.otherDevices} />}
               {activeTab === 'wan' && <WanTab wanConfigs={backupInfo.wanConfigs} />}
               {activeTab === 'vlans' && <VlansTab vlanConfigs={backupInfo.vlanConfigs} />}
+              {activeTab === 'vpns' && <VpnsTab vpnConfigs={backupInfo.vpnConfigs} />}
             </div>
           </div>
         )}

@@ -1,7 +1,7 @@
 import JSZip from 'jszip';
 import { ungzip } from 'pako';
 
-import type { BackupInfo, DeviceRecord, VlanConfig, WanConfig } from '../unifi/types';
+import type { BackupInfo, DeviceRecord, VlanConfig, WanConfig, VpnConfig } from '../unifi/types';
 import { categorizeDevices, formatSuggestedFilename } from '../unifi/types';
 
 import { IV_HEX, KEY_HEX, decryptBuffer } from './cryptoUtils';
@@ -64,6 +64,7 @@ export async function analyzeBackup(
   const { switches, otherDevices } = categorizeDevices(devices);
   const wanConfigs = extractWANConfigs(collections);
   const vlanConfigs = extractVLANConfigs(collections);
+  const vpnConfigs = extractVPNConfigs(collections);
   const portConfigs = extractPortConfigs(collections);
   const allNetworkConfs = extractAllNetworkConfs(collections);
   const version = extractVersion(collections);
@@ -82,6 +83,7 @@ export async function analyzeBackup(
     suggestedFilename,
     wanConfigs,
     vlanConfigs,
+    vpnConfigs,
     portConfigs,
     allNetworkConfs,
   };
@@ -236,6 +238,51 @@ function extractPortConfigs(
   collections: Record<string, Record<string, unknown>[]>
 ): Record<string, unknown>[] {
   return collections['portconf'] || [];
+}
+
+/**
+ * Extracts VPN configurations (site-to-site VPNs)
+ */
+function extractVPNConfigs(collections: Record<string, Record<string, unknown>[]>): VpnConfig[] {
+  const vpnConfigs: VpnConfig[] = [];
+  const networkCollection = collections['networkconf'] || [];
+
+  networkCollection.forEach((net: Record<string, unknown>) => {
+    if (net.purpose === 'site-vpn' && net.vpn_type === 'ipsec-vpn') {
+      vpnConfigs.push({
+        name: (net.name as string) || 'Unnamed VPN',
+        enabled: net.enabled as boolean | undefined,
+        vpn_type: net.vpn_type as string | undefined,
+        ipsec_key_exchange: net.ipsec_key_exchange as string | undefined,
+        ipsec_peer_ip: net.ipsec_peer_ip as string | undefined,
+        ipsec_local_ip: net.ipsec_local_ip as string | undefined,
+        x_ipsec_pre_shared_key: net.x_ipsec_pre_shared_key as string | undefined,
+        ipsec_interface: net.ipsec_interface as string | undefined,
+        ipsec_tunnel_ip: net.ipsec_tunnel_ip as string | undefined,
+        ipsec_ike_encryption: net.ipsec_ike_encryption as string | undefined,
+        ipsec_esp_encryption: net.ipsec_esp_encryption as string | undefined,
+        ipsec_ike_hash: net.ipsec_ike_hash as string | undefined,
+        ipsec_esp_hash: net.ipsec_esp_hash as string | undefined,
+        ipsec_ike_dh_group: net.ipsec_ike_dh_group as number | undefined,
+        ipsec_esp_dh_group: net.ipsec_esp_dh_group as number | undefined,
+        ipsec_dh_group: net.ipsec_dh_group as number | undefined,
+        ipsec_ike_lifetime: net.ipsec_ike_lifetime as number | undefined,
+        ipsec_esp_lifetime: net.ipsec_esp_lifetime as number | undefined,
+        ipsec_pfs: net.ipsec_pfs as boolean | undefined,
+        ipsec_dynamic_routing: net.ipsec_dynamic_routing as boolean | undefined,
+        remote_vpn_subnets: net.remote_vpn_subnets as string[] | undefined,
+        route_distance: net.route_distance as number | undefined,
+        interface_mtu: net.interface_mtu as number | undefined,
+        interface_mtu_enabled: net.interface_mtu_enabled as boolean | undefined,
+        ipsec_local_identifier: net.ipsec_local_identifier as string | undefined,
+        ipsec_remote_identifier: net.ipsec_remote_identifier as string | undefined,
+        ipsec_local_identifier_enabled: net.ipsec_local_identifier_enabled as boolean | undefined,
+        ipsec_remote_identifier_enabled: net.ipsec_remote_identifier_enabled as boolean | undefined,
+      });
+    }
+  });
+
+  return vpnConfigs;
 }
 
 /**

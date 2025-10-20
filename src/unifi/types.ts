@@ -1,4 +1,4 @@
-export type TabType = 'overview' | 'switches' | 'devices' | 'wan' | 'vlans';
+export type TabType = 'overview' | 'switches' | 'devices' | 'wan' | 'vlans' | 'vpns';
 
 export interface DeviceRecord {
   _id?: string;
@@ -60,6 +60,38 @@ export interface VlanConfig {
   enabled?: boolean;
 }
 
+export interface VpnConfig {
+  name: string;
+  enabled?: boolean;
+  vpn_type?: string;
+  ipsec_key_exchange?: string;
+  ipsec_peer_ip?: string;
+  ipsec_local_ip?: string;
+  x_ipsec_pre_shared_key?: string;
+  ipsec_interface?: string;
+  ipsec_tunnel_ip?: string;
+  ipsec_ike_encryption?: string;
+  ipsec_esp_encryption?: string;
+  ipsec_ike_hash?: string;
+  ipsec_esp_hash?: string;
+  ipsec_ike_dh_group?: number;
+  ipsec_esp_dh_group?: number;
+  ipsec_dh_group?: number;
+  ipsec_ike_lifetime?: number;
+  ipsec_esp_lifetime?: number;
+  ipsec_pfs?: boolean;
+  ipsec_dynamic_routing?: boolean;
+  remote_vpn_subnets?: string[];
+  route_distance?: number;
+  interface_mtu?: number;
+  interface_mtu_enabled?: boolean;
+  ipsec_local_identifier?: string;
+  ipsec_remote_identifier?: string;
+  ipsec_local_identifier_enabled?: boolean;
+  ipsec_remote_identifier_enabled?: boolean;
+  [key: string]: unknown;
+}
+
 export interface BackupInfo {
   filename: string;
   version?: string;
@@ -73,6 +105,7 @@ export interface BackupInfo {
   suggestedFilename?: string;
   wanConfigs: WanConfig[];
   vlanConfigs: VlanConfig[];
+  vpnConfigs: VpnConfig[];
   portConfigs: PortConfig[];
   allNetworkConfs: NetworkConfig[];
 }

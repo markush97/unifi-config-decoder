@@ -69,6 +69,12 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({ backupInfo }) => {
               {backupInfo.vlanConfigs.length}
             </td>
           </tr>
+          <tr>
+            <td className='px-4 py-2 font-semibold'>Site-to-Site VPNs</td>
+            <td className='px-4 py-2 text-2xl font-bold text-orange-600'>
+              {backupInfo.vpnConfigs.length}
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>

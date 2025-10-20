@@ -1,12 +1,13 @@
 import React from 'react';
 
 interface TabNavigationProps {
-  activeTab: 'overview' | 'switches' | 'devices' | 'wan' | 'vlans';
-  onTabChange: (tab: 'overview' | 'switches' | 'devices' | 'wan' | 'vlans') => void;
+  activeTab: 'overview' | 'switches' | 'devices' | 'wan' | 'vlans' | 'vpns';
+  onTabChange: (tab: 'overview' | 'switches' | 'devices' | 'wan' | 'vlans' | 'vpns') => void;
   switchCount: number;
   deviceCount: number;
   wanCount: number;
   vlanCount: number;
+  vpnCount: number;
 }
 
 export const TabNavigation: React.FC<TabNavigationProps> = ({
@@ -16,6 +17,7 @@ export const TabNavigation: React.FC<TabNavigationProps> = ({
   deviceCount,
   wanCount,
   vlanCount,
+  vpnCount,
 }) => {
   const tabs = [
     { id: 'overview' as const, label: '📋 Overview', count: null },
@@ -23,6 +25,7 @@ export const TabNavigation: React.FC<TabNavigationProps> = ({
     { id: 'devices' as const, label: '🖥️ Other Devices', count: deviceCount },
     { id: 'wan' as const, label: '🌐 WAN', count: wanCount },
     { id: 'vlans' as const, label: '🔀 VLANs', count: vlanCount },
+    { id: 'vpns' as const, label: '🔐 Site2Site VPNs', count: vpnCount },
   ];
 
   return (
